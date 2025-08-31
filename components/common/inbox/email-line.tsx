@@ -4,7 +4,6 @@ import { Email } from '@/mock-data/emails';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { cn } from '@/lib/utils';
 import { motion } from 'motion/react';
-import { getEmailIcon } from '../../../lib/email-utils';
 
 interface EmailLineProps {
    email: Email;
@@ -43,10 +42,6 @@ export default function EmailLine({
                         .join('')}
                   </AvatarFallback>
                </Avatar>
-
-               <div className="absolute -bottom-1 -right-1 size-5 rounded-full bg-accent border-2 border-background flex items-center justify-center">
-                  {getEmailIcon(email.type, 'size-3')}
-               </div>
             </div>
 
             <div className="w-full">

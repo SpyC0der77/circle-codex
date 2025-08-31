@@ -4,10 +4,18 @@ import { Email } from '@/mock-data/emails';
 import { useEmailsStore } from '@/store/emails-store';
 import { Button } from '@/components/ui/button';
 import { Mailbox } from './icons/mailbox';
-import { Check, Paperclip, Send } from 'lucide-react';
+import { Check, Paperclip, Send, Tag as TagIcon } from 'lucide-react';
 import { markdownToHtml } from '@/lib/markdown';
 import { useMemo, useState } from 'react';
 import { RichTextEditor } from '@/components/common/editor/rich-text-editor';
+import { labels } from '@/mock-data/labels';
+import {
+   DropdownMenu,
+   DropdownMenuTrigger,
+   DropdownMenuContent,
+   DropdownMenuCheckboxItem,
+   DropdownMenuLabel,
+} from '@/components/ui/dropdown-menu';
 
 interface EmailPreviewProps {
    email?: Email;
@@ -15,7 +23,7 @@ interface EmailPreviewProps {
 }
 
 export default function EmailPreview({ email, onMarkAsRead }: EmailPreviewProps) {
-   const { getUnreadCount } = useEmailsStore();
+   const { getUnreadCount, toggleLabel } = useEmailsStore();
    const [reply, setReply] = useState<string>('');
    // Compute once per content change to keep hooks order stable across renders
    const bodyHtml = useMemo(() => markdownToHtml(email?.content ?? ''), [email?.content]);
@@ -43,6 +51,26 @@ export default function EmailPreview({ email, onMarkAsRead }: EmailPreviewProps)
             </div>
 
             <div className="flex items-center gap-2">
+               <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                     <Button variant="outline" size="xs" className="gap-1">
+                        <TagIcon className="size-4" />
+                        Tags
+                     </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="min-w-56">
+                     <DropdownMenuLabel>Apply tags</DropdownMenuLabel>
+                     {labels.map((l) => (
+                        <DropdownMenuCheckboxItem
+                           key={l.id}
+                           checked={email.labels.some((x) => x.id === l.id)}
+                           onCheckedChange={() => toggleLabel(email.id, l.id)}
+                        >
+                           {l.name}
+                        </DropdownMenuCheckboxItem>
+                     ))}
+                  </DropdownMenuContent>
+               </DropdownMenu>
                {!email.read && onMarkAsRead && (
                   <Button
                      variant="outline"
@@ -58,14 +86,6 @@ export default function EmailPreview({ email, onMarkAsRead }: EmailPreviewProps)
          </div>
 
          <div className="pt-10 pb-6 px-4 space-y-4 w-full max-w-4xl mx-auto">
-            <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-               <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-muted-foreground">
-                     {email.identifier}
-                  </span>
-               </div>
-            </div>
-
             <div>
                <h3 className="text-xl font-semibold text-foreground mb-2">{email.title}</h3>
             </div>

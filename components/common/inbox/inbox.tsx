@@ -26,10 +26,12 @@ import {
 import EmailPreview from './email-preview';
 import EmailLine from './email-line';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useFilterStore } from '@/store/filter-store';
 
 export default function Inbox() {
    const { emails, selectedEmail, setSelectedEmail, markAsRead, markAllAsRead, getUnreadEmails } =
       useEmailsStore();
+   const { filters } = useFilterStore();
 
    const [showRead, setShowRead] = useState(true);
    const [showSnoozed, setShowSnoozed] = useState(false);
@@ -42,6 +44,11 @@ export default function Inbox() {
    const filteredEmails = emails
       .filter((email) => {
          if (!showRead && email.read) return false;
+         if (filters.labels.length > 0) {
+            const emailLabelIds = new Set(email.labels.map((l) => l.id));
+            const hasAny = filters.labels.some((id) => emailLabelIds.has(id));
+            if (!hasAny) return false;
+         }
          // Add snoozed filter logic here when implemented
          return true;
       })
