@@ -1,11 +1,11 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
-interface NotificationBoxProps {
+interface MailboxProps {
    className?: string;
 }
 
-export const NotificationBox: React.FC<NotificationBoxProps> = ({ className }) => {
+export const Mailbox: React.FC<MailboxProps> = ({ className }) => {
    return (
       <svg
          viewBox="0 0 78 80"

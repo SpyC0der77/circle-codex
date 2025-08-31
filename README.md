@@ -8,7 +8,7 @@
 <br />
 <br />
 
-This repo is trimmed to only the Inbox page of the original Circle app. It runs a minimal Next.js + shadcn/ui setup focused solely on the notifications inbox UI.
+This repo is trimmed to only the Inbox page of the original Circle app. It runs a minimal Next.js + shadcn/ui setup focused solely on an email inbox UI.
 
 ## 🛠️ Technologies
 

@@ -10,10 +10,10 @@ import {
    Plus,
    Upload,
 } from 'lucide-react';
-import { NotificationType } from '@/mock-data/inbox';
+import { EmailType } from '@/mock-data/emails';
 import { cn } from '@/lib/utils';
 
-export function getNotificationIcon(type: NotificationType, className?: string) {
+export function getEmailIcon(type: EmailType, className?: string) {
    switch (type) {
       case 'comment':
          return <MessageCircle className={cn('text-blue-500', className)} />;
