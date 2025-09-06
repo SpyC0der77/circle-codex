@@ -1,5 +1,10 @@
-import { redirect } from 'next/navigation';
+import MainLayout from '@/components/layout/main-layout';
+import Inbox from '@/components/common/inbox/inbox';
 
-export default function Home() {
-   redirect('lndev-ui/team/CORE/all');
+export default function InboxPage() {
+   return (
+      <MainLayout>
+         <Inbox />
+      </MainLayout>
+   );
 }

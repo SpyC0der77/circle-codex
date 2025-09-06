@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
-import { useNotificationsStore } from '@/store/notifications-store';
+import { useEmailsStore } from '@/store/emails-store';
 import { Button } from '@/components/ui/button';
 import {
    DropdownMenu,
@@ -23,31 +23,32 @@ import {
    Archive,
    ArrowUpDown,
 } from 'lucide-react';
-import NotificationPreview from './issue-preview';
-import IssueLine from './issue-line';
+import EmailPreview from './email-preview';
+import EmailLine from './email-line';
 import { SidebarTrigger } from '@/components/ui/sidebar';
+import { useFilterStore } from '@/store/filter-store';
 
 export default function Inbox() {
-   const {
-      notifications,
-      selectedNotification,
-      setSelectedNotification,
-      markAsRead,
-      markAllAsRead,
-      getUnreadNotifications,
-   } = useNotificationsStore();
+   const { emails, selectedEmail, setSelectedEmail, markAsRead, markAllAsRead, getUnreadEmails } =
+      useEmailsStore();
+   const { filters } = useFilterStore();
 
    const [showRead, setShowRead] = useState(true);
    const [showSnoozed, setShowSnoozed] = useState(false);
    const [showUnreadFirst, setShowUnreadFirst] = useState(false);
    const [ordering, setOrdering] = useState('newest');
    const [showId, setShowId] = useState(true);
-   const [showStatusIcon, setShowStatusIcon] = useState(true);
+   // Removed status icon in emails; no toggle needed.
 
-   // Filter and sort notifications based on settings
-   const filteredNotifications = notifications
-      .filter((notification) => {
-         if (!showRead && notification.read) return false;
+   // Filter and sort emails based on settings
+   const filteredEmails = emails
+      .filter((email) => {
+         if (!showRead && email.read) return false;
+         if (filters.labels.length > 0) {
+            const emailLabelIds = new Set(email.labels.map((l) => l.id));
+            const hasAny = filters.labels.some((id) => emailLabelIds.has(id));
+            if (!hasAny) return false;
+         }
          // Add snoozed filter logic here when implemented
          return true;
       })
@@ -62,16 +63,16 @@ export default function Inbox() {
             : new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
       });
 
-   const handleDeleteAllNotifications = () => {
-      console.log('Delete all notifications');
+   const handleDeleteAllEmails = () => {
+      console.log('Delete all emails');
    };
 
-   const handleDeleteReadNotifications = () => {
-      console.log('Delete read notifications');
+   const handleDeleteReadEmails = () => {
+      console.log('Delete read emails');
    };
 
-   const handleDeleteCompletedIssues = () => {
-      console.log('Delete notifications for completed issues');
+   const handleDeleteCompletedConversations = () => {
+      console.log('Delete emails for completed conversations');
    };
 
    return (
@@ -92,17 +93,17 @@ export default function Inbox() {
                         </Button>
                      </DropdownMenuTrigger>
                      <DropdownMenuContent align="start">
-                        <DropdownMenuItem onClick={handleDeleteAllNotifications}>
+                        <DropdownMenuItem onClick={handleDeleteAllEmails}>
                            <Trash2 className="w-4 h-4 mr-2" />
-                           Delete all notifications
+                           Delete all emails
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleDeleteReadNotifications}>
+                        <DropdownMenuItem onClick={handleDeleteReadEmails}>
                            <CheckCheck className="w-4 h-4 mr-2" />
-                           Delete all read notifications
+                           Delete all read emails
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={handleDeleteCompletedIssues}>
+                        <DropdownMenuItem onClick={handleDeleteCompletedConversations}>
                            <Archive className="w-4 h-4 mr-2" />
-                           Delete notifications for completed issues
+                           Delete emails for completed conversations
                         </DropdownMenuItem>
                      </DropdownMenuContent>
                   </DropdownMenu>
@@ -113,7 +114,7 @@ export default function Inbox() {
                      variant="ghost"
                      size="xs"
                      onClick={markAllAsRead}
-                     disabled={getUnreadNotifications().length === 0}
+                     disabled={getUnreadEmails().length === 0}
                   >
                      <CheckCheck className="w-4 h-4" />
                   </Button>
@@ -182,19 +183,9 @@ export default function Inbox() {
                         <div className="p-2 space-y-3">
                            <div className="flex items-center justify-between">
                               <Label htmlFor="show-id" className="text-sm">
-                                 ID
+                                 Message ID
                               </Label>
                               <Switch id="show-id" checked={showId} onCheckedChange={setShowId} />
-                           </div>
-                           <div className="flex items-center justify-between">
-                              <Label htmlFor="show-status-icon" className="text-sm">
-                                 Status and icon
-                              </Label>
-                              <Switch
-                                 id="show-status-icon"
-                                 checked={showStatusIcon}
-                                 onCheckedChange={setShowStatusIcon}
-                              />
                            </div>
                         </div>
                      </DropdownMenuContent>
@@ -202,21 +193,20 @@ export default function Inbox() {
                </div>
             </div>
             <div className="w-full flex flex-col items-center justify-start overflow-y-scroll h-[calc(100%-40px)] pb-0.25">
-               {filteredNotifications.map((notification) => (
-                  <IssueLine
-                     key={notification.id}
-                     notification={notification}
-                     isSelected={selectedNotification?.id === notification.id}
-                     onClick={() => setSelectedNotification(notification)}
+               {filteredEmails.map((email) => (
+                  <EmailLine
+                     key={email.id}
+                     email={email}
+                     isSelected={selectedEmail?.id === email.id}
+                     onClick={() => setSelectedEmail(email)}
                      showId={showId}
-                     showStatusIcon={showStatusIcon}
                   />
                ))}
             </div>
          </ResizablePanel>
          <ResizableHandle withHandle />
          <ResizablePanel defaultSize={350} maxSize={500}>
-            <NotificationPreview notification={selectedNotification} onMarkAsRead={markAsRead} />
+            <EmailPreview email={selectedEmail} onMarkAsRead={markAsRead} />
          </ResizablePanel>
       </ResizablePanelGroup>
    );

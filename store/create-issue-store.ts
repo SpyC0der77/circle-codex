@@ -1,14 +1,13 @@
-import { Status } from '@/mock-data/status';
 import { create } from 'zustand';
 
 interface CreateIssueState {
    isOpen: boolean;
-   defaultStatus: Status | null;
+   defaultStatus: string | null;
 
    // Actions
-   openModal: (status?: Status) => void;
+   openModal: (status?: string) => void;
    closeModal: () => void;
-   setDefaultStatus: (status: Status | null) => void;
+   setDefaultStatus: (status: string | null) => void;
 }
 
 export const useCreateIssueStore = create<CreateIssueState>((set) => ({
