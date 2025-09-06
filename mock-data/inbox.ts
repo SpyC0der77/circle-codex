@@ -1,5 +1,4 @@
 import { User, users } from './users';
-import { Status, status } from './status';
 import { LabelInterface, labels } from './labels';
 
 export type NotificationType =
@@ -18,7 +17,6 @@ export interface InboxItem {
    identifier: string;
    title: string;
    description: string;
-   status: Status;
    assignee: User | null;
    labels: LabelInterface[];
    createdAt: string;
@@ -38,7 +36,6 @@ export const inboxItems: InboxItem[] = [
       title: 'Refactor Button component for full accessibility compliance',
       description:
          'Refactor the Button component to ensure full accessibility compliance with WCAG 2.1 guidelines',
-      status: status[0],
       assignee: users[0],
       labels: [labels[0]],
       createdAt: '2024-01-15T10:00:00Z',
@@ -56,7 +53,6 @@ export const inboxItems: InboxItem[] = [
       title: 'Optimize animations for smoother UI transitions',
       description:
          'Optimize all animations in the UI to provide smoother transitions and better user experience',
-      status: status[1],
       assignee: users[1],
       labels: [labels[1]],
       createdAt: '2024-01-12T14:30:00Z',
@@ -72,7 +68,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-309',
       title: 'Implement dark mode toggle with system preferences support',
       description: 'Add dark mode toggle functionality with automatic system preferences detection',
-      status: status[2],
       assignee: users[2],
       labels: [labels[2]],
       createdAt: '2024-01-10T09:15:00Z',
@@ -89,7 +84,6 @@ export const inboxItems: InboxItem[] = [
       title: 'Design new modal system with focus trapping',
       description:
          'Create a new modal system with proper focus management and accessibility features',
-      status: status[3],
       assignee: users[3],
       labels: [labels[0], labels[2]],
       createdAt: '2024-01-03T16:45:00Z',
@@ -105,7 +99,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-501',
       title: 'Enhance responsiveness of Navbar',
       description: 'Improve the navbar responsiveness across all device sizes and orientations',
-      status: status[4],
       assignee: users[4],
       labels: [labels[1]],
       createdAt: '2023-12-28T11:20:00Z',
@@ -121,7 +114,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-502',
       title: 'Optimize loading time of Footer',
       description: 'Optimize footer component loading time and reduce bundle size impact',
-      status: status[5],
       assignee: users[4],
       labels: [labels[3]],
       createdAt: '2023-12-28T11:25:00Z',
@@ -138,7 +130,6 @@ export const inboxItems: InboxItem[] = [
       title: 'Refactor Sidebar for better accessibility',
       description:
          'Refactor the sidebar component to improve accessibility and keyboard navigation',
-      status: status[3],
       assignee: users[2],
       labels: [labels[0]],
       createdAt: '2023-12-20T08:00:00Z',
@@ -154,7 +145,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-504',
       title: 'Implement new Card component design',
       description: 'Implement the new card component design with updated styling and interactions',
-      status: status[1],
       assignee: users[2],
       labels: [labels[2]],
       createdAt: '2023-12-20T08:15:00Z',
@@ -170,7 +160,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-505',
       title: 'Improve Tooltip interactivity',
       description: 'Enhance tooltip component with better positioning and interaction patterns',
-      status: status[5],
       assignee: users[2],
       labels: [labels[1]],
       createdAt: '2023-12-20T08:30:00Z',
@@ -186,7 +175,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-506',
       title: 'Fix Dropdown menu positioning',
       description: 'Fix dropdown menu positioning issues on mobile devices and small screens',
-      status: status[2],
       assignee: users[0],
       labels: [labels[0]],
       createdAt: '2023-12-15T13:45:00Z',
@@ -203,7 +191,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-507',
       title: 'Implement annotation tools for PDF viewer',
       description: 'Add annotation tools functionality to the PDF viewer component',
-      status: status[3],
       assignee: users[1],
       labels: [labels[2]],
       createdAt: '2023-12-10T10:00:00Z',
@@ -219,7 +206,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-508',
       title: 'Restore previous editor interface',
       description: 'Restore the previous editor interface design based on user feedback',
-      status: status[0],
       assignee: users[5],
       labels: [labels[1]],
       createdAt: '2023-12-10T10:15:00Z',
@@ -235,7 +221,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-509',
       title: 'Revamp Button states and interactions',
       description: 'Revamp button component states and interaction patterns for better UX',
-      status: status[5],
       assignee: users[5],
       labels: [labels[1]],
       createdAt: '2023-12-10T10:30:00Z',
@@ -252,7 +237,6 @@ export const inboxItems: InboxItem[] = [
       title: 'Dashboard: adapt breadcrumb text in feature view',
       description:
          'Adapt breadcrumb text display in the dashboard feature view for better navigation',
-      status: status[2],
       assignee: users[2],
       labels: [labels[1]],
       createdAt: '2023-12-05T15:20:00Z',
@@ -268,7 +252,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-511',
       title: 'Fix audio file upload from mobile devices',
       description: 'Fix issues with audio file upload functionality on mobile devices',
-      status: status[1],
       assignee: users[4],
       labels: [labels[0]],
       createdAt: '2023-12-05T15:35:00Z',
@@ -285,7 +268,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-512',
       title: 'Show transcription preview',
       description: 'Add transcription preview functionality to the media player component',
-      status: status[4],
       assignee: users[6],
       labels: [labels[2]],
       createdAt: '2023-11-28T12:00:00Z',
@@ -301,7 +283,6 @@ export const inboxItems: InboxItem[] = [
       identifier: 'LNUI-513',
       title: 'Improve Tooltip interactivity',
       description: 'Enhance tooltip component interactivity and user experience',
-      status: status[3],
       assignee: users[2],
       labels: [labels[1]],
       createdAt: '2023-11-28T12:15:00Z',
