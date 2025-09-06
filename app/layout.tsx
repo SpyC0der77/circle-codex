@@ -21,7 +21,7 @@ export const metadata: Metadata = {
       default: 'Circle by lndev-ui',
    },
    description:
-      'Email client built with Convex, Next.js, and Tailwind CSS. Designed to be a beautiful email client, inspired by Linear.',
+      'Project management interface inspired by Linear. Built with Next.js and shadcn/ui, this application allows tracking of issues, projects and teams with a modern, responsive UI.',
    openGraph: {
       type: 'website',
       locale: 'en_US',
